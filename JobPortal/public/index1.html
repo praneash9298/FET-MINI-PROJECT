@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>AngularJS Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app1.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('back.avif') center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 400px) {
+            form {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form ng-controller="FormController" ng-submit="submitForm()">
+        <h2>Job Application Form</h2>
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" ng-model="formData.name" required>
+            <span class="error" ng-if="errors.name">{{ errors.name }}</span>
+        </div>
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" ng-model="formData.age" required>
+            <span class="error" ng-if="errors.age">{{ errors.age }}</span>
+        </div>
+        <div class="form-group">
+            <label>District:</label>
+            <input type="text" ng-model="formData.district" required>
+        </div>
+        <div class="form-group">
+            <label>Date of Application:</label>
+            <input type="date" ng-model="formData.date" required>
+            <span class="error" ng-if="errors.date">{{ errors.date }}</span>
+        </div>
+        <div class="form-group">
+            <label>Job to Apply for:</label>
+            <select ng-model="formData.job" required>
+                <option value="">Select Job</option>
+                <option value="Developer">Developer</option>
+                <option value="Designer">Designer</option>
+                <option value="Manager">Manager</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

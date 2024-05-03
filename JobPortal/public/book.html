@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
+            color: #fff;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 form-container">
+                <h2 class="text-center">Job Registration</h2>
+                <form id="jobForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" class="form-control" id="age" placeholder="Enter your age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select class="form-control" id="gender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobPreference">Job Preference:</label>
+                        <input type="text" class="form-control" id="jobPreference" placeholder="Enter your job preference" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District:</label>
+                        <input type="text" class="form-control" id="district" placeholder="Enter your district" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Education:</label>
+                        <input type="text" class="form-control" id="education" placeholder="Enter your education" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Skills:</label>
+                        <input type="text" class="form-control" id="skills" placeholder="Enter your skills" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone No:</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Work Experience:</label>
+                        <input type="text" class="form-control" id="experience" placeholder="Enter your work experience" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pin Code:</label>
+                        <input type="number" class="form-control" id="pincode" placeholder="Enter your pin code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <div id="response" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="job.js"></script>
+    <script>
+        document.getElementById('jobForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const age = parseInt(document.getElementById('age').value.trim());
+            const gender = document.getElementById('gender').value;
+            const jobPreference = document.getElementById('jobPreference').value.trim();
+            const district = document.getElementById('district').value.trim();
+            const education = document.getElementById('education').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const experience = document.getElementById('experience').value.trim();
+            const pincode = parseInt(document.getElementById('pincode').value.trim());
+            const nameRegex = /^[a-zA-Z ]+$/;
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!name.match(nameRegex)) {
+                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Name should not contain numbers.</div>';
+                return;
+            }
+            if (age < 20 || age > 50) {
+                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Age should be between 20 and 50.</div>';
+                return;
+            }
+            if (!phone.match(phoneRegex)) {
+                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Phone number should be 10 digits and start with 9, 8, or 6.</div>';
+                return;
+            }
+            if (!experience.match(experience) ) {
+                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Experience should be more than 3 years.</div>';
+                return;
+            }
+            if (isNaN(pincode) || pincode.toString().length !== 6) {
+                document.getElementById('response').innerHTML = '<div class="alert alert-danger" role="alert">Pin code should be exactly 6 digits.</div>';
+                return;
+            }
+
+            // If all validations passed, display success message
+            document.getElementById('response').innerHTML = `<div class="alert alert-success" role="alert">Form submitted successfully.<br>Name: ${name}<br>Age: ${age}<br>Gender: ${gender}<br>Job Preference: ${jobPreference}<br>District: ${district}<br>Education: ${education}<br>Skills: ${skills}<br>Phone No: ${phone}<br>Work Experience: ${experience}<br>Pin Code: ${pincode}</div>`;
+
+            // Reset form
+            document.getElementById('jobForm').reset();
+        });
+    </script>
+</body>
+
+</html>

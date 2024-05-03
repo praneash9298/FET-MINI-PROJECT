@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url('b2.jpg') center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    small {
+      color: #888;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error {
+      color: #f00;
+    }
+  </style>
+</head>
+<body>
+  <form id="jobApplicationForm">
+    <h2>Job Application Form</h2>
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" name="companyName" required>
+    <label for="companyAddress">Company Address:</label>
+    <textarea id="companyAddress" name="companyAddress" rows="4" required></textarea>
+    <label for="companyVacancy">Labour Vacancy:</label>
+    <input type="text" id="companyVacancy" name="companyVacancy" required>
+    <label for="numApplicants">Number of People to Apply:</label>
+    <input type="number" id="numApplicants" name="numApplicants" required>
+    <label for="salary">Salary for Jobs:</label>
+    <input type="text" id="salary" name="salary" required>
+    <label for="experience">Experience Required (in years):</label>
+    <input type="number" id="experience" name="experience" required>
+    <label for="phoneNumber">Company Phone Number:</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber" pattern="^[6789]\d{9}$" required>
+    <small>Format: 10 digits, starting with 6, 7, 8, or 9</small>
+    <label for="companyPinCode">Company Pin Code:</label>
+    <input type="text" id="companyPinCode" name="companyPinCode" pattern="[0-9]{6}" required>
+    <small>Format: 6 digits</small>
+    <label for="email">Company Email:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="button" id="submitButton">Submit</button>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#submitButton').click(function () {
+        $('.error').remove();
+        var isValid = true;
+
+        var companyName = $('#companyName').val();
+        if (!/^[a-zA-Z\s]+$/.test(companyName)) {
+          $('#companyName').after('<small class="error">Company Name should contain only alphabets and spaces.</small>');
+          isValid = false;
+        }
+
+        var phoneNumber = $('#phoneNumber').val();
+        if (!/^[6789]\d{9}$/.test(phoneNumber)) {
+          $('#phoneNumber').after('<small class="error">Invalid phone number format.</small>');
+          isValid = false;
+        }
+        var companyPinCode = $('#companyPinCode').val();
+        if (!/^\d{6}$/.test(companyPinCode)) {
+          $('#companyPinCode').after('<small class="error">Invalid pin code format.</small>');
+          isValid = false;
+        }
+
+        var experience = $('#experience').val();
+        if (parseInt(experience) < 3) {
+          $('#experience').after('<small class="error">Experience should not be below 3 years.</small>');
+          isValid = false;
+        }
+
+        var email = $('#email').val();
+        if (!isValidEmail(email)) {
+          $('#email').after('<small class="error">Invalid email address.</small>');
+          isValid = false;
+        }
+
+        var labourVacancy = $('#companyVacancy').val();
+        if (isNaN(labourVacancy) || parseInt(labourVacancy) < 0 || parseInt(labourVacancy) > 20 || !/^\d+$/.test(labourVacancy)) {
+          $('#companyVacancy').after('<small class="error">Labour Vacancy invalid</small>');
+          isValid = false;
+        }
+        var numApplicants = $('#numApplicants').val();
+        if (isNaN(numApplicants) || parseInt(numApplicants) < 0) {
+          $('#numApplicants').after('<small class="error">Number of People to Apply should be a non-negative number.</small>');
+          isValid = false;
+        }
+        if (isValid) {
+          if (confirm("Are you sure you want to submit?")) {
+            
+            $('form')[0].reset();
+            window.location.href = 'success.html';
+          }
+        } else {
+          $('.error:first').prev().focus();
+        }
+      });
+
+      function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+    });
+  </script>
+</body>
+</html>

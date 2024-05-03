@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('b1.jpg') center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        label.radio {
+            display: flex;
+            align-items: center;
+        }
+
+        label.radio input {
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            margin-top: 8px;
+        }
+
+        @media screen and (max-width: 400px) {
+            form {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <form id="jobApplicationForm">
+        <h2>Job Application Form</h2>
+
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="e.g Praneash M.G">
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label class="radio">Gender:
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="female"> Female
+        </label>
+
+        <label for="jobPreference">Job Preference:</label>
+        <select id="jobPreference" name="jobPreference" required>
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+            <option value="Online Job">Online JoB</option>
+        </select>
+
+        <label for="district">District:</label>
+        <input type="text" id="district" name="district" required placeholder="e.g., Erode">
+
+        <label for="education">Education:</label>
+        <input type="text" id="education" name="education" required>
+
+        <label for="skills">Skills (comma-separated):</label>
+        <input type="text" id="skills" name="skills" required>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="e.g., 1234567890">
+
+        <label for="WorkExperience">Work Experience:</label>
+        <input type="text" id="WorkExperience" name="WorkExperience" required placeholder="e.g., 2 Years">
+
+        <label for="pinCode">Pin Code:</label>
+        <input type="text" id="pinCode" name="pinCode" required placeholder="e.g., 123456">
+
+        <label for="coverLetter">Cover Letter:</label>
+        <textarea id="coverLetter" name="coverLetter" rows="4" required></textarea>
+
+        <button type="button" onclick="validateForm()">Submit</button>
+        <div id="errorContainer"></div>
+    </form>
+
+    <script>
+        function validateForm() {
+            var fullName = $("#fullName").val();
+            var age = $("#age").val();
+            var gender = $('input[name="gender"]:checked').length > 0;
+            var jobPreference = $("#jobPreference").val();
+            var district = $("#district").val();
+            var education = $("#education").val();
+            var skills = $("#skills").val();
+            var phoneNumber = $("#phoneNumber").val();
+            var pinCode = $("#pinCode").val();
+            var coverLetter = $("#coverLetter").val();
+            $("#errorContainer").empty();
+
+            if (!fullName || !age || !gender || !jobPreference || !district || !education || !skills || !phoneNumber || !pinCode || !coverLetter) {
+                showError("All fields are required.");
+                return;
+            }
+
+            if (parseInt(age) < 20 || parseInt(age) > 60) {
+                showError("Age must be between 20 and 60.");
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phoneNumber)) {
+                showError("Phone number must be 10 digits.");
+                return;
+            }
+
+            if (!/^\d{6}$/.test(pinCode)) {
+                showError("Pin code must be 6 digits.");
+                return;
+            }
+            window.location.href = 'forms.html';
+        }
+
+        function showError(message) {
+            var errorDiv = $("<div>").addClass("error").text(message);
+            $("#errorContainer").append(errorDiv);
+        }
+    </script>
+
+</body>
+</html>
